@@ -124,6 +124,12 @@ public class P25TrafficChannelManager extends TrafficChannelManager implements I
             mIgnoreEncryptedChannels = ((DecodeConfigP25Phase1)parentChannel.getDecodeConfiguration()).getIgnoreEncryptedChannels();
         }
 
+        if(parentChannel.getDecodeConfiguration() instanceof DecodeConfigP25Phase2)
+        {
+            mIgnoreDataCalls = ((DecodeConfigP25Phase1)parentChannel.getDecodeConfiguration()).getIgnoreDataCalls();
+            mIgnoreEncryptedChannels = ((DecodeConfigP25Phase1)parentChannel.getDecodeConfiguration()).getIgnoreEncryptedChannels();
+        }
+
         createPhase1TrafficChannels();
         createPhase2TrafficChannels();
     }
@@ -351,7 +357,7 @@ public class P25TrafficChannelManager extends TrafficChannelManager implements I
         {
             if (mIgnoreEncryptedChannels && serviceOptions != null && serviceOptions.isEncrypted()) {
                 channelGrantEvent.setDetails(IGNORING_ENCRYPTED_CHANNELS);
-                channelGrantEvent.setEventDescription(channelGrantEvent.getEventDescription() + " - Ignored");
+                channelGrantEvent.setDetails(channelGrantEvent.getDetails() + " - Ignored");
                 mLog.debug("Channel is encrypted. Ignoring. - {}", channelGrantEvent);
                 return;
             }
@@ -519,7 +525,7 @@ public class P25TrafficChannelManager extends TrafficChannelManager implements I
         {
             if (mIgnoreEncryptedChannels && serviceOptions != null && serviceOptions.isEncrypted()) {
                 channelGrantEvent.setDetails(IGNORING_ENCRYPTED_CHANNELS);
-                channelGrantEvent.setEventDescription(channelGrantEvent.getEventDescription() + " - Ignored");
+                channelGrantEvent.setDetails(channelGrantEvent.getDetails() + " - Ignored");
                 mLog.debug("Channel is encrypted. Ignoring. - {}", channelGrantEvent);
                 return;
             }
